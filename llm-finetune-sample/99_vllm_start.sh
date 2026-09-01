@@ -9,6 +9,11 @@ export VLLM_TEST_FORCE_FP8_MARLIN=0
 export VLLM_USE_FLASHINFER_SAMPLER=1
 export VLLM_USE_V2_MODEL_RUNNER=1
 export WORKDIR=$(pwd)
+
+# 초기 실행 시 flashinfer가 CPU Unit만큼의 process를 실행시켜 OOM issue가 발생한다.
+# 이를 해결하기 위해 MAX_JOBS을 설정하여 제한을 걸어야 한다.
+export MAX_JOBS=4 
+
 vllm serve nvidia/Qwen3.6-27B-NVFP4 \
   --host 0.0.0.0 \
   --port 8000 \
